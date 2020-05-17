@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p 5000",
-    "deploy": "git push dokku@casply.com:otaku_shop master"
+    "deploy": "git push dokku@casply.com:magatama master"
   },
   "dependencies": {
     "axios": "^0.19.2",
