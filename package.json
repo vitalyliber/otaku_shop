@@ -5,11 +5,17 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p 5000",
+    "deploy": "git push dokku@casply.com:otaku_shop master"
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "bootstrap": "^4.5.0",
+    "moment": "^2.25.3",
     "next": "9.4.1",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "reactstrap": "^8.4.1",
+    "sass": "^1.26.5"
   }
 }
