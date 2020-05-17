@@ -3,11 +3,11 @@ import moment from 'moment';
 import Photo from "./Photo";
 
 function Card({ item }) {
-  const { image, title, desc, updated_at, price } = item;
+  const { image, title, desc, updated_at, price, image_big: {url} } = item;
   return (
     <>
       <div className="card m-2 mb-3 m-sm-0 mb-sm-3">
-        <Photo item={image} title={title} />
+        <Photo item={image} title={title} big_url={url} />
         <div className="card-body">
           <h3>{title}</h3>
           {desc &&

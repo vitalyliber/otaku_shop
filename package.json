@@ -13,9 +13,11 @@
     "bootstrap": "^4.5.0",
     "moment": "^2.25.3",
     "next": "9.4.1",
+    "prettier": "^2.0.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "reactstrap": "^8.4.1",
-    "sass": "^1.26.5"
+    "sass": "^1.26.5",
+    "simple-react-lightbox": "^2.8.0-5"
   }
 }

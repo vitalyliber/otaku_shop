@@ -1,12 +1,31 @@
-import React from "react";
+import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
 
-const Photo = ({ item, title }) => {
+const Photo = ({ item, title, big_url }) => {
   const height = item.metadata && item.metadata.height;
   const width = item.metadata && item.metadata.width;
   return (
     <>
       <div className="wrapper">
-        <img className="element" src={item.url} alt={title} />
+        <SimpleReactLightbox>
+          <SRLWrapper
+            options={{
+              buttons: {
+                showNextButton: false,
+                showPrevButton: false,
+                showFullscreenButton: false,
+                showDownloadButton: false,
+                showAutoplayButton: false,
+              },
+              thumbnails: {
+                showThumbnails: false,
+              },
+            }}
+          >
+            <a href={big_url} data-attribute="SRL">
+              <img className="element" src={item.url} alt={title} />
+            </a>
+          </SRLWrapper>
+        </SimpleReactLightbox>
       </div>
       <style jsx>{`
         .wrapper {
