@@ -16,8 +16,8 @@
     "prettier": "^2.0.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-image-lightbox": "^5.1.1",
     "reactstrap": "^8.4.1",
-    "sass": "^1.26.5",
-    "simple-react-lightbox": "^2.8.0-5"
+    "sass": "^1.26.5"
   }
 }

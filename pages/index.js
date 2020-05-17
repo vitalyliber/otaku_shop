@@ -13,7 +13,7 @@ export default function Home({ list }) {
           <div className="col">
             <div className="card-columns">
               {list.map((el) => (
-                <Card item={el} />
+                <Card key={el.id} item={el} />
               ))}
             </div>
           </div>

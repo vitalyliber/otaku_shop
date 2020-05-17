@@ -1,32 +1,30 @@
-import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
+import { useState } from "react";
+import Lightbox from "react-image-lightbox";
 
 const Photo = ({ item, title, big_url }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const height = item.metadata && item.metadata.height;
   const width = item.metadata && item.metadata.width;
   return (
     <>
       <div className="wrapper">
-        <SimpleReactLightbox>
-          <SRLWrapper
-            options={{
-              buttons: {
-                showNextButton: false,
-                showPrevButton: false,
-                showFullscreenButton: false,
-                showDownloadButton: false,
-                showAutoplayButton: false,
-              },
-              thumbnails: {
-                showThumbnails: false,
-              },
-            }}
-          >
-            <a href={big_url} data-attribute="SRL">
-              <img className="element" src={item.url} alt={title} />
-            </a>
-          </SRLWrapper>
-        </SimpleReactLightbox>
+        <img
+          onClick={() => setIsOpen(true)}
+          className="element"
+          src={item.url}
+          alt={title}
+        />
       </div>
+      {isOpen && (
+        <Lightbox
+          mainSrc={big_url}
+          nextSrc={undefined}
+          prevSrc={undefined}
+          onCloseRequest={() => setIsOpen(false)}
+          onMovePrevRequest={() => null}
+          onMoveNextRequest={() => null}
+        />
+      )}
       <style jsx>{`
         .wrapper {
           overflow: hidden;
