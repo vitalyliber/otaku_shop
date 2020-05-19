@@ -1,31 +1,22 @@
-import { useEffect } from "react";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import Head from "next/head";
 import Link from "next/link";
 import colors from "../utils/colors";
+import {loadCartProducts} from "../api/cart";
 
 const title = "Magatama";
 const desc =
   "Great place to get your anime merchandise, props and accessories.";
 const Header = () => {
-  useEffect(() => {
-    const productsData = localStorage.getItem("products");
-    if (productsData) {
-      const newProducts = JSON.parse(productsData);
-      setTimeout(
-        () => mutate("/api/cart", { products: newProducts }, false),
-        1000
-      );
-    }
-  }, []);
-  const { data } = useSWR("/api/cart", () => null, {
-    initialData: { products: [] },
+  const { data } = useSWR("/api/cart", loadCartProducts, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
   });
   let products = [];
-  if (data && data.products) {
-    products = data.products;
+  if (data && data.list) {
+    products = data.list;
   }
-  console.log("products..", products);
+  console.log("products..", products, data);
   return (
     <>
       <Head>
@@ -57,14 +48,16 @@ const Header = () => {
               <span>Magatama</span> Shop
             </a>
           </Link>
-          <div className="text-white d-flex align-items-center">
-            Cart{" "}
-            {products && products.length > 0 && (
-              <span className="badge badge-light text-dark ml-2">
-                {products.length}
-              </span>
-            )}
-          </div>
+          <Link href="/cart" as="/cart">
+            <a className="text-white d-flex align-items-center">
+              Cart{" "}
+              {products && products.length > 0 && (
+                <span className="badge badge-light text-dark ml-2">
+                  {products.length}
+                </span>
+              )}
+            </a>
+          </Link>
         </div>
       </nav>
       <style jsx>{`

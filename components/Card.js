@@ -3,12 +3,16 @@ import moment from "moment";
 import useSWR, { mutate } from "swr";
 
 import Photo from "./Photo";
+import {loadCartProducts} from "../api/cart";
 
 function Card({ item }) {
-  const { data } = useSWR("/api/cart", () => null);
+  const { data } = useSWR("/api/cart", loadCartProducts, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
   let products = [];
-  if (data && data.products) {
-    products = data.products;
+  if (data && data.list) {
+    products = data.list;
   }
   const {
     id,
@@ -50,7 +54,7 @@ function Card({ item }) {
                   newProducts = [...products, { id, amount }];
                 }
                 localStorage.setItem('products', JSON.stringify(newProducts))
-                mutate("/api/cart", { products: newProducts }, false);
+                mutate("/api/cart", { list: newProducts }, false);
               }}
               className="btn btn-primary btn-sm btn-block"
             >
@@ -67,7 +71,7 @@ function Card({ item }) {
                         ...products.filter((el) => el.id !== id),
                       ];
                       localStorage.setItem('products', JSON.stringify(newProducts))
-                      mutate("/api/cart", { products: newProducts }, false);
+                      mutate("/api/cart", { list: newProducts }, false);
                     } else {
                       const amount = existingProduct.amount - 1;
                       const newProducts = [
@@ -75,7 +79,7 @@ function Card({ item }) {
                         { id, amount },
                       ];
                       localStorage.setItem('products', JSON.stringify(newProducts))
-                      mutate("/api/cart", { products: newProducts }, false);
+                      mutate("/api/cart", { list: newProducts }, false);
                     }
                   }}
                   className="w-25 font-weight-bold"
@@ -92,7 +96,7 @@ function Card({ item }) {
                       { id, amount },
                     ];
                     localStorage.setItem('products', JSON.stringify(newProducts))
-                    mutate("/api/cart", { products: newProducts }, false);
+                    mutate("/api/cart", { list: newProducts }, false);
                   }}
                 >
                   +
