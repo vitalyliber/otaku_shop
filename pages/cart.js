@@ -11,10 +11,15 @@ const Cart = () => {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
-  const { data, error } = useSWR(
-    [cartData && cartData.list.length > 0 ? "/api/cart/all" : null, cartData],
-    () => fetchProducts({ ids: cartData && cartData.list.map((el) => el.id) })
-  );
+  const { data, error } = useSWR(["/api/cart/all", cartData], () => {
+    if (cartData && cartData.list.length > 0) {
+      return fetchProducts({
+        ids: cartData && cartData.list.map((el) => el.id),
+      });
+    } else {
+      return [];
+    }
+  });
   let products = [];
   if (data && data.list) {
     products = data.list;
@@ -30,7 +35,7 @@ const Cart = () => {
     return allSum;
   }, [data]);
   const generateListOfLinks = useMemo(() => {
-    if (products.length > 0) {
+    if (products.length > 0 && cartData && cartData.list.length > 0) {
       return products
         .map(({ title, id }) => {
           const cartEl = cartData.list.find((el) => el.id === id);
@@ -62,12 +67,16 @@ const Cart = () => {
             <br />
             <h5 className="text-center text-muted">{sum} USD</h5>
             <br />
-            <a
+            <button
+              disabled={products.length === 0}
               href={`https://wa.me/79194825880?text=I%20want%20to%20make%20order%20with%20price%20${sum}USD%20${generateListOfLinks}`}
               className="btn btn-info btn-block btn-lg"
             >
               Create order
-            </a>
+            </button>
+            <p className="text-center mb-0 mt-2">
+              <small>* Directly connect to supplier via WhatsApp</small>
+            </p>
           </div>
         </div>
       </div>
