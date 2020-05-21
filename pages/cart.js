@@ -67,13 +67,22 @@ const Cart = () => {
             <br />
             <h5 className="text-center text-muted">{sum} USD</h5>
             <br />
-            <button
-              disabled={products.length === 0}
-              href={`https://wa.me/79194825880?text=I%20want%20to%20make%20order%20with%20price%20${sum}USD%20${generateListOfLinks}`}
-              className="btn btn-info btn-block btn-lg"
-            >
-              Create order
-            </button>
+            {products.length === 0 && (
+              <button
+                disabled={products.length === 0}
+                className="btn btn-info btn-block btn-lg"
+              >
+                Create order
+              </button>
+            )}
+            {products.length > 0 && (
+              <a
+                href={`https://wa.me/79194825880?text=I%20want%20to%20make%20order%20with%20price%20${sum}USD%20${generateListOfLinks}`}
+                className="btn btn-info btn-block btn-lg"
+              >
+                Create order
+              </a>
+            )}
             <p className="text-center mb-0 mt-2">
               <small>* Directly connect to supplier via WhatsApp</small>
             </p>
