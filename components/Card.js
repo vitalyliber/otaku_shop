@@ -1,11 +1,12 @@
 import { useMemo } from "react";
-import moment from "moment";
 import useSWR, { mutate } from "swr";
 
 import Photo from "./Photo";
-import {loadCartProducts} from "../api/cart";
+import { loadCartProducts } from "../api/cart";
+import useI18n from "../effects/useI18n";
 
 function Card({ item }) {
+  const i18n = useI18n();
   const { data } = useSWR("/api/cart", loadCartProducts, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
@@ -19,7 +20,7 @@ function Card({ item }) {
     image,
     title,
     desc,
-    updated_at,
+    currency,
     price,
     image_big: { url },
   } = item;
@@ -35,10 +36,7 @@ function Card({ item }) {
         <div className="card-body">
           <h3>{title}</h3>
           {desc && <p className="mt-2">{desc}</p>}
-          <p className="mt-2 text-muted font-weight-bold">{price} $</p>
-          <small>
-            <p className="text-muted">{moment(updated_at).fromNow()}</p>
-          </small>
+          <p className="mt-2 text-muted font-weight-bold">{price} {currency}</p>
           {!existingProduct && (
             <div
               onClick={() => {
@@ -53,12 +51,12 @@ function Card({ item }) {
                 } else {
                   newProducts = [...products, { id, amount }];
                 }
-                localStorage.setItem('products', JSON.stringify(newProducts))
+                localStorage.setItem("products", JSON.stringify(newProducts));
                 mutate("/api/cart", { list: newProducts }, false);
               }}
               className="btn btn-primary btn-sm btn-block"
             >
-              Add to cart
+              {i18n.t("add_to_cart")}
             </div>
           )}
           {existingProduct && (
@@ -70,7 +68,10 @@ function Card({ item }) {
                       const newProducts = [
                         ...products.filter((el) => el.id !== id),
                       ];
-                      localStorage.setItem('products', JSON.stringify(newProducts))
+                      localStorage.setItem(
+                        "products",
+                        JSON.stringify(newProducts)
+                      );
                       mutate("/api/cart", { list: newProducts }, false);
                     } else {
                       const amount = existingProduct.amount - 1;
@@ -78,7 +79,10 @@ function Card({ item }) {
                         ...products.filter((el) => el.id !== id),
                         { id, amount },
                       ];
-                      localStorage.setItem('products', JSON.stringify(newProducts))
+                      localStorage.setItem(
+                        "products",
+                        JSON.stringify(newProducts)
+                      );
                       mutate("/api/cart", { list: newProducts }, false);
                     }
                   }}
@@ -95,7 +99,10 @@ function Card({ item }) {
                       ...products.filter((el) => el.id !== id),
                       { id, amount },
                     ];
-                    localStorage.setItem('products', JSON.stringify(newProducts))
+                    localStorage.setItem(
+                      "products",
+                      JSON.stringify(newProducts)
+                    );
                     mutate("/api/cart", { list: newProducts }, false);
                   }}
                 >

@@ -1,13 +1,18 @@
 import useSWR from "swr";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import colors from "../utils/colors";
-import {loadCartProducts} from "../api/cart";
+import { loadCartProducts } from "../api/cart";
+import useI18n from "../effects/useI18n";
 
 const title = "Magatama";
 const desc =
   "Great place to get your anime merchandise, props and accessories.";
 const Header = () => {
+  const i18n = useI18n();
+  const router = useRouter();
+  const { lang } = router.query;
   const { data } = useSWR("/api/cart", loadCartProducts, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
@@ -43,14 +48,14 @@ const Header = () => {
 
       <nav className="navbar navbar-light bg-dark">
         <div className="container justify-content-between">
-          <Link href="/" as="/">
+          <Link href={`/${lang ? "[lang]" : ""}`} as={`/${lang || ""}`}>
             <a className="navbar-brand text-white">
               <span>Magatama</span> Shop
             </a>
           </Link>
-          <Link href="/cart" as="/cart">
+          <Link href="[lang]/cart" as={`${lang}/cart`}>
             <a className="text-white d-flex align-items-center">
-              Cart{" "}
+              {i18n.t("cart")}{" "}
               {products && products.length > 0 && (
                 <span className="badge badge-light text-dark ml-2">
                   {products.length}
