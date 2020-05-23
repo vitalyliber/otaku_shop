@@ -53,7 +53,7 @@ const Header = () => {
               <span>Magatama</span> Shop
             </a>
           </Link>
-          <Link href="[lang]/cart" as={`${lang}/cart`}>
+          <Link href="/[lang]/cart" as={`/${lang}/cart`}>
             <a className="text-white d-flex align-items-center">
               {i18n.t("cart")}{" "}
               {products && products.length > 0 && (

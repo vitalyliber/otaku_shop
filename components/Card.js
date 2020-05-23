@@ -4,9 +4,11 @@ import useSWR, { mutate } from "swr";
 import Photo from "./Photo";
 import { loadCartProducts } from "../api/cart";
 import useI18n from "../effects/useI18n";
+import Link from "next/link";
 
 function Card({ item }) {
   const i18n = useI18n();
+  const lang = i18n.currentLocale();
   const { data } = useSWR("/api/cart", loadCartProducts, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
@@ -34,9 +36,15 @@ function Card({ item }) {
       <div className="card m-2 mb-3 m-sm-0 mb-sm-3">
         <Photo item={image} title={title} big_url={url} />
         <div className="card-body">
-          <h3>{title}</h3>
+          <Link href="[lang]/products/[id]" as={`${lang}/products/${id}`}>
+            <a>
+              <h3 className="text-dark">{title}</h3>
+            </a>
+          </Link>
           {desc && <p className="mt-2">{desc}</p>}
-          <p className="mt-2 text-muted font-weight-bold">{price} {currency}</p>
+          <p className="mt-2 text-muted font-weight-bold">
+            {price} {currency}
+          </p>
           {!existingProduct && (
             <div
               onClick={() => {
