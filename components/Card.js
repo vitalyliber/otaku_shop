@@ -36,7 +36,7 @@ function Card({ item }) {
       <div className="card m-2 mb-3 m-sm-0 mb-sm-3">
         <Photo item={image} title={title} big_url={url} />
         <div className="card-body">
-          <Link href="[lang]/products/[id]" as={`${lang}/products/${id}`}>
+          <Link href="/[lang]/products/[id]" as={`/${lang}/products/${id}`}>
             <a>
               <h3 className="text-dark">{title}</h3>
             </a>
