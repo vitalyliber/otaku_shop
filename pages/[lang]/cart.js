@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { fetchProducts } from "../../api/products";
 import Card from "../../components/Card";
 import { loadCartProducts } from "../../api/cart";
@@ -9,6 +9,8 @@ import useI18n from "../../effects/useI18n";
 
 const Cart = () => {
   const i18n = useI18n();
+  const lang = i18n.currentLocale();
+
   const { data: cartData } = useSWR("/api/cart", loadCartProducts, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
@@ -42,7 +44,7 @@ const Cart = () => {
       return products
         .map(({ title, id }) => {
           const cartEl = cartData.list.find((el) => el.id === id);
-          return `${title} (${cartEl.amount})`;
+          return `${title} https://magatama.casply.com/${lang}/products/${id} (${cartEl.amount})%0D%0A`;
         })
         .join(",%20");
     }
@@ -52,12 +54,12 @@ const Cart = () => {
     <>
       <Header />
       <br />
-      <h4 className="text-center">{i18n.t('products_in_cart')}</h4>
+      <h4 className="text-center">{i18n.t("products_in_cart")}</h4>
       <br />
       <div className="container">
         <div className="row">
           <div className="col">
-            {error && <div>{i18n.t('failed_to_load')}</div>}
+            {error && <div>{i18n.t("failed_to_load")}</div>}
             {!data && <div className="text-center">{i18n.t("loading")}</div>}
             <div className="card-columns">
               {products.map((el) => (
@@ -77,20 +79,49 @@ const Cart = () => {
                 disabled={products.length === 0}
                 className="btn btn-info btn-block btn-lg"
               >
-                {i18n.t("create_order")}
+                {i18n.t("create_order_via_whatsapp")}
               </button>
             )}
             {products.length > 0 && (
               <a
-                href={`https://wa.me/79194825880?text=I%20want%20to%20make%20order%20with%20price%20${sum}USD%20${generateListOfLinks}`}
+                href={`https://wa.me/79194825880?text=${i18n.t(
+                  "i_want_to_make_order_with_price"
+                )}${sum}${i18n.t("currency")}%20${generateListOfLinks}`}
                 className="btn btn-info btn-block btn-lg"
               >
-                {i18n.t("create_order")}
+                {i18n.t("create_order_via_whatsapp")}
               </a>
             )}
-            <p className="text-center mb-0 mt-2">
-              <small>{i18n.t("whatsapp_cart_notice")}</small>
-            </p>
+            {products.length === 0 && (
+              <button
+                disabled={products.length === 0}
+                className="btn btn-info btn-block btn-lg"
+              >
+                {i18n.t("create_order_via_email")}
+              </button>
+            )}
+            {products.length > 0 && (
+              <a
+                href={`mailto:magatama.wood@gmail.com?subject=${i18n.t(
+                  "i_want_to_make_order"
+                )}&body=${i18n.t(
+                  "i_want_to_make_order_with_price"
+                )}${sum}${i18n.t("currency")}%20${generateListOfLinks}`}
+                className="btn btn-info btn-block btn-lg"
+              >
+                {i18n.t("create_order_via_email")}
+              </a>
+            )}
+            <button
+              onClick={() => {
+                localStorage.setItem("products", JSON.stringify([]));
+                mutate("/api/cart", { list: [] }, false);
+              }}
+              disabled={products.length === 0}
+              className="btn btn-light btn-block btn-sm mt-3"
+            >
+              {i18n.t("clean_a_cart")}
+            </button>
           </div>
         </div>
       </div>

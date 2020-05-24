@@ -7,7 +7,6 @@ import Loading from "../../components/Loading";
 
 export default function Home({ list }) {
   const router = useRouter();
-  const { lang } = router.query;
   if (router.isFallback) {
     return (
       <>
