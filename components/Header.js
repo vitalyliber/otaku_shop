@@ -21,7 +21,6 @@ const Header = () => {
   if (data && data.list) {
     products = data.list;
   }
-  console.log("products..", products, data);
   return (
     <>
       <Head>

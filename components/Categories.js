@@ -2,7 +2,6 @@ import React from "react";
 import SubcategoryCard from "./SubcategoryCard";
 
 const Categories = ({ list }) => {
-  console.log(list)
   return (
     <div className="container">
       <div className="row">
