@@ -2,8 +2,20 @@ import React from "react";
 import Header from "../../../../../components/Header";
 import { fetchProducts } from "../../../../../api/products";
 import Card from "../../../../../components/Card";
+import {useRouter} from "next/router";
+import Loading from "../../../../../components/Loading";
 
 const CategorySubcategory = ({ list }) => {
+  const router = useRouter();
+  if (router.isFallback) {
+    return (
+      <>
+        <Header />
+        <br />
+        <Loading />
+      </>
+    );
+  }
   return (
     <>
       <Header />
