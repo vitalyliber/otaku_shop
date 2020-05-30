@@ -18,7 +18,8 @@ I18n.translations["en"] = {
   cart: "Cart",
   clean_a_cart: "Clean a cart",
   i_want_to_make_order: "I%20want%20to%20make%20order%20",
-  i_want_to_make_order_with_price: "I%20want%20to%20make%20order%20with%20price%20"
+  i_want_to_make_order_with_price: "I%20want%20to%20make%20order%20with%20price%20",
+  open: "Open",
 };
 I18n.translations["ru"] = {
   loading: "Загрузка...",
@@ -37,7 +38,8 @@ I18n.translations["ru"] = {
   cart: "Корзина",
   clean_a_cart: "Очистить корзину",
   i_want_to_make_order: "Я%20хочу%20сделать%20заказ%20",
-  i_want_to_make_order_with_price: "Я%20хочу%20сделать%20заказ%20на%20сумму%20"
+  i_want_to_make_order_with_price: "Я%20хочу%20сделать%20заказ%20на%20сумму%20",
+  open: "Перейти",
 };
 const languages = ["ru", "en"];
 const fallback = "en";

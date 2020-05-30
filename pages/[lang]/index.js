@@ -4,8 +4,10 @@ import Header from "../../components/Header";
 import Card from "../../components/Card";
 import {fetchProducts} from "../../api/products";
 import Loading from "../../components/Loading";
+import {fetchCategories} from "../../api/categories";
+import Categories from "../../components/Categories";
 
-export default function Home({ list }) {
+export default function Home({ list, categories }) {
   const router = useRouter();
   if (router.isFallback) {
     return (
@@ -20,6 +22,7 @@ export default function Home({ list }) {
     <>
       <Header />
       <br/>
+      <Categories list={categories} />
       <div className="container">
         <div className="row">
           <div className="col">
@@ -46,5 +49,6 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { lang } = params;
   const { list } = await fetchProducts({lang});
-  return { unstable_revalidate: 1, props: { list } };
+  const { list: categories } = await fetchCategories({lang});
+  return { unstable_revalidate: 1, props: { list, categories } };
 }
