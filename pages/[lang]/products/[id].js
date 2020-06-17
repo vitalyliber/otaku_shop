@@ -33,7 +33,7 @@ function Packages({ data }) {
       <div className="container">
         <div className="row justify-content-md-center">
           <div className="col-12 col-sm-12 col-md-12 col-lg-8">
-            <Card item={data} />
+            <Card item={data} shortDesc={false} />
           </div>
         </div>
       </div>

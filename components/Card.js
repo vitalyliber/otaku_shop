@@ -5,8 +5,10 @@ import Photo from "./Photo";
 import { loadCartProducts } from "../api/cart";
 import useI18n from "../effects/useI18n";
 import Link from "next/link";
+import AddLineBreaks from "./AddLineBreaks";
+import trimString from "../utils/trimString";
 
-function Card({ item }) {
+function Card({ item, shortDesc = true }) {
   const i18n = useI18n();
   const lang = i18n.currentLocale();
   const { data } = useSWR("/api/cart", loadCartProducts, {
@@ -31,7 +33,6 @@ function Card({ item }) {
     id,
   ]);
 
-
   return (
     <>
       <div className="card m-2 mb-3 m-sm-0 mb-sm-3">
@@ -42,7 +43,11 @@ function Card({ item }) {
               <h3 className="text-dark">{title}</h3>
             </a>
           </Link>
-          {desc && <p className="mt-2">{desc}</p>}
+          {desc && (
+            <p className="mt-2">
+              <AddLineBreaks string={shortDesc ? trimString(desc) : desc} />
+            </p>
+          )}
           <p className="mt-2 text-muted font-weight-bold">
             {price} {currency}
           </p>
