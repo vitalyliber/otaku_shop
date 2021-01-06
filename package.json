@@ -9,7 +9,7 @@
     "deploy": "git push dokku@casply.com:magatama master"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.0",
     "browser-lang": "^0.1.0",
     "i18n-js": "^3.5.1",
