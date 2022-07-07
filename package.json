@@ -13,7 +13,7 @@
     "bootstrap": "^4.5.0",
     "browser-lang": "^0.1.0",
     "i18n-js": "^3.5.1",
-    "moment": "^2.25.3",
+    "moment": "^2.29.4",
     "next": "9.4.1",
     "nextjs-redirect-locale": "^1.0.3",
     "prettier": "^2.0.5",
